@@ -36,6 +36,13 @@ public class Playlist {
     @Override
     public String toString() {
         String output = "[HEAD] ";
+        // go to first episode
+        if (head == null) {
+            output += " [END]\n";
+            return output;
+        }
+        while (head.prev != null)
+            head = head.prev;
         Episode current = head;
         if (!isEmpty()) {
             while (current.next != null) {
@@ -75,77 +82,109 @@ public class Playlist {
     // TODO: Implement the method addFirst
     public void addFirst(String title, double duration) {
 
+        // if list is empty just add it
+        if (head == null) {
+            Episode newEp = new Episode(title, duration, head, null);
+            head = newEp;
+            return;
+        }
+        // if it isnt empty...
+
+        // go to first episode
         while (head.prev != null)
             head = head.prev;
 
-        Episode newOne = new Episode(title, duration, head, null);
-
-        head = newOne;
-
+        // add new episode
+        Episode newEp = new Episode(title, duration, head, null);
+        // link to head
+        if (head != null)
+            head.prev = newEp;
+        // make pointer point at new node
+        head = newEp;
+        // increase list size
         size++;
     }
 
     // TODO: Implement the method addLast
     public void addLast(String title, double duration) {
+
+        // if it's empty just add (yes, again)
+        if (head == null) {
+            Episode newEp = new Episode(title, duration, head, null);
+            head = newEp;
+            return;
+        }
+
+        // move to end of the list
         while (head.next != null)
             head = head.next;
 
-        Episode newOne = new Episode(title, duration, null, head);
+        // add new episode
+        Episode newEp = new Episode(title, duration, null, head);
 
-        head = newOne;
+        // make sure new episode is doubly linked with head
+        head.next = newEp;
+        newEp.prev = head;
 
+        // make pointer point at the new "last element"
+        head = newEp;
+
+        // increase list size
         size++;
     }
 
     // TODO: Implement the method deleteFirst
     public Episode deleteFirst() {
 
-        if (isEmpty())
+        if (head == null)
             throw new NoSuchElementException();
 
         while (head.prev != null)
             head = head.prev;
 
         Episode temp = head;
-        head = null;
+        head = head.next;
         size--;
-
+        free(temp);
         return temp;
     }
 
     // TODO: Implement the method deleteLast
     public Episode deleteLast() {
 
-        while (head.next != null)
-            head = head.next;
         if (head == null)
             throw new NoSuchElementException();
+
+        while (head.next != null)
+            head = head.next;
+
         Episode temp = head;
-        head = null;
         size--;
+        temp = null;
         return temp;
     }
 
     // TODO: Implement the method deleteEpisode
     public Episode deleteEpisode(String title) {
 
-        while (head.prev != null)
-            head = head.prev;
         if (head == null)
             throw new NoSuchElementException();
-        for (int i = 0; i < size; i++) {
-            if (head.title.equals(title))
+
+        while (head.prev != null)
+            head = head.prev;
+
+        while (head.next != null) {
+            String check = head.title;
+            if (check.equals(title))
                 break;
-        }
-
-        Episode temp = null;
-
-        if (head.next != null) {
-            temp = head;
             head = head.next;
         }
 
+        Episode temp = head;
+        head = head.next;
+
         size--;
+        temp = null;
         return temp;
     }
 
@@ -154,37 +193,26 @@ public class Playlist {
     // TODO: Implement the method merge (read description in A4 handout)
     public Episode merge(Episode a, Episode b) {
 
-        Episode updater = new Episode(null, 0, null, null);
-
-        while (true) {
-
-            if (a.next == null) {
-                updater.next = b;
-                break;
-            }
-            if (b.next == null) {
-                updater.next = b;
-                break;
-            }
-
-            /*
-             * Compare the data of the two
-             * lists whichever lists' data is
-             * smaller, append it into tail and
-             * advance the head to the next Node
-             */
-            if (a.title.compareTo(b.title) > 0) {
-                updater.next = a;
-                a = a.next;
-            } else {
-                updater.next = b;
-                b = b.next;
-            }
-
-            /* Advance the tail */
-            updater = updater.next;
+        // see if lists are empty
+        if (a == null) {
+            return b;
         }
-        return updater.next;
+        if (b == null) {
+            return a;
+        }
+
+        // see which one goes first
+        if (a.compareTo(b) < 0) {
+            a.next = merge(a.next, b);
+            a.prev = null;
+            return a;
+        } else if (a.compareTo(b) == 0) {
+            return a;
+        } else {
+            b.next = merge(a, b.next);
+            return b;
+        }
+
     }
     // Finds the middle episode of the list that begins at the passed node reference
 
