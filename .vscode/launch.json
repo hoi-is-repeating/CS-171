@@ -1,0 +1,91 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        
+        {
+            "name": "Java",
+            "type": "java",
+            "request": "launch",
+            "stopOnEntry": true,
+            "jdkPath": "${env:JAVA_HOME}/bin",
+            "cwd": "${fileDirname}",
+            "startupClass": "${fileBasenameNoExtension}",
+            "classpath": [
+                ".",
+                "${fileDirname}"
+            ]
+        },
+        {
+            "name": "Java Console App",
+            "type": "java",
+            "request": "launch",
+            "stopOnEntry": true,
+            "jdkPath": "${env:JAVA_HOME}/bin",
+            "cwd": "${fileDirname}",
+            "startupClass": "${fileBasenameNoExtension}",
+            "classpath": [
+                ".",
+                "${fileDirname}"
+            ],
+            "externalConsole": true
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "ArithmeticProgression",
+            "request": "launch",
+            "mainClass": "ArithmeticProgression",
+            "projectName": "CS-171_f0e568f3"
+        },
+        {
+            "type": "java",
+            "name": "CS170Review",
+            "request": "launch",
+            "mainClass": "CS170Review",
+            "projectName": "CS-171_f0e568f3"
+        },
+        {
+            "type": "java",
+            "name": "CounterDemo",
+            "request": "launch",
+            "mainClass": "CounterDemo",
+            "projectName": "CS-171_f0e568f3"
+        },
+        {
+            "type": "java",
+            "name": "FibonacciProgression",
+            "request": "launch",
+            "mainClass": "FibonacciProgression",
+            "projectName": "CS-171_f0e568f3"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "CS-171_f0e568f3"
+        },
+        {
+            "type": "java",
+            "name": "OverloadingNull",
+            "request": "launch",
+            "mainClass": "OverloadingNull",
+            "projectName": "CS-171_f0e568f3"
+        },
+        {
+            "type": "java",
+            "name": "PathFinder",
+            "request": "launch",
+            "mainClass": "PathFinder",
+            "projectName": "CS-171_f0e568f3"
+        }
+    ]
+}
