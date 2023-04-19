@@ -145,7 +145,7 @@ public class Playlist {
         Episode temp = head;
         head = head.next;
         size--;
-        free(temp);
+        temp = null;
         return temp;
     }
 
